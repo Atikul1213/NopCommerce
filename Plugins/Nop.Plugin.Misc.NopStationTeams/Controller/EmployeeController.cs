@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Mvc;
+using Nop.Plugin.Misc.NopStationTeams.Domain;
 using Nop.Plugin.Misc.NopStationTeams.Factories;
 using Nop.Plugin.Misc.NopStationTeams.Model;
 using Nop.Plugin.Misc.NopStationTeams.Services;
@@ -35,6 +37,31 @@ public class EmployeeController : BasePluginController
         var model = await _employeeModelFactory.PrepareEmployeeListModelAsync(searchModel);
 
         return Json(model);
+    }
+
+    public async Task<IActionResult> Create()
+    {
+
+        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Create.cshtml");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(EmployeeModel model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest("~/Plugins/Misc.NopStationTeams/Views/Employee.Create.cshtml");
+
+        var employee = new Employee
+        {
+            Name = model.Name,
+            Designation = model.Designation,
+            IsMVP = model.IsMVP,
+            IsCertified = model.IsCertified
+
+        };
+
+        await _employeeService.InsertEmployeeAsync(employee);
+        return RedirectToAction("Configure");
     }
 
 

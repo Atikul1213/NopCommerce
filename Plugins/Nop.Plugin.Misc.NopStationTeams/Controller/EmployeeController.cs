@@ -47,8 +47,8 @@ public class EmployeeController : BasePluginController
     }
 
 
-    [HttpPost]
-    public async Task<IActionResult> Create(EmployeeModel model)
+    [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+    public async Task<IActionResult> Create(EmployeeModel model, bool continueEditing)
     {
         if(ModelState.IsValid)
         {
@@ -62,7 +62,9 @@ public class EmployeeController : BasePluginController
             };
 
             await _employeeService.InsertEmployeeAsync(employee);
-            return RedirectToAction("List");
+
+           
+            return continueEditing? RedirectToAction("Edit", new {id= employee.Id} ):  RedirectToAction("List");
         }
 
         model = await _employeeModelFactory.PrepareEmployeeModelAsync(model, null);
@@ -85,8 +87,8 @@ public class EmployeeController : BasePluginController
     }
 
 
-    [HttpPost]
-    public async Task<IActionResult> Edit(EmployeeModel model)
+    [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+    public async Task<IActionResult> Edit(EmployeeModel model, bool continueEditing)
     {
         var employee = await _employeeService.GetEmployeeByIdAsync(model.Id);
         if (employee==null)
@@ -106,7 +108,8 @@ public class EmployeeController : BasePluginController
              
 
             await _employeeService.UpdateEmployeeAsync(employee);
-            return RedirectToAction("List");
+
+            return continueEditing ? RedirectToAction("Edit", new { id = employee.Id}) : RedirectToAction("List");
         }
 
         model = await _employeeModelFactory.PrepareEmployeeModelAsync(model, employee);
@@ -116,16 +119,19 @@ public class EmployeeController : BasePluginController
 
 
 
-
-
-    public async Task<IActionResult> Configure()
+    [HttpPost]
+    public async Task<IActionResult> Delete(EmployeeModel model)
     {
-         
-        return View("~/Plugins/Misc.NopStationTeams/View/Configure.cshtml");
+        var employee = await _employeeService.GetEmployeeByIdAsync(model.Id);
+        if (employee == null)
+        {
+            return RedirectToAction("List");
+        }
+
+
+        await _employeeService.DeleteEmployeeAsync(employee);
+        return RedirectToAction("List");
     }
-
-    
-
 
 
 

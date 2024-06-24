@@ -34,6 +34,15 @@ namespace Nop.Plugin.Misc.NopStationTeams
             //locales
             await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
             {
+
+                ["Admin.Misc.Employees"] = "Employees",
+                ["Admin.Misc.Employees.AddNew"] = "Add new Employee",
+                ["Admin.Misc.Employees.EditDetails"] = "Edit Employee Details",
+                ["Admin.Misc.Employees.BackToList"] = "Back to Employee List",
+
+
+
+
                 ["Admin.Misc.Employee.Fields.Name"] = "Name",
                 ["Admin.Misc.Employee.Fields.Designation"] = "Designation",
                 ["Admin.Misc.Employee.Fields.IsMVP"] = "IsMVP",
@@ -44,7 +53,7 @@ namespace Nop.Plugin.Misc.NopStationTeams
                 ["Admin.Misc.Employee.Fields.Designation.Hint"] = "Enter Employee Designation.",
                 ["Admin.Misc.Employee.Fields.IsMVP.Hint"] = "Checked if Employee IsMVP.",
                 ["Admin.Misc.Employee.Fields.IsCertified.Hint"] = "Checked if Employee IsCertified.",
-                ["Admin.Misc.Employee.Fields.EmployeeStatus"] = "Select Employee Status.", 
+                ["Admin.Misc.Employee.Fields.EmployeeStatus.Hint"] = "Select Employee Status.", 
 
 
                 ["Admin.Misc.Employee.List.Name"] = "Name", 

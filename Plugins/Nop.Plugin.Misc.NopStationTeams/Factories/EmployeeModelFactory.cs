@@ -3,7 +3,6 @@ using Nop.Plugin.Misc.NopStationTeams.Model;
 using Nop.Plugin.Misc.NopStationTeams.Services;
 using Nop.Services;
 using Nop.Services.Localization;
-using Nop.Web;
 using Nop.Web.Framework.Models.Extensions;
 
 namespace Nop.Plugin.Misc.NopStationTeams.Factories;
@@ -19,6 +18,7 @@ public class EmployeeModelFactory : IEmployeeModelFactory
 
     public async Task<EmployeeListModel> PrepareEmployeeListModelAsync(EmployeeSearchModel searchModel)
     {
+         
         ArgumentNullException.ThrowIfNull(nameof(searchModel));
         var employees = await _employeeService.SearchEmployeesAsync(searchModel.Name, searchModel.EmployeeStatusId,
 
@@ -31,8 +31,36 @@ public class EmployeeModelFactory : IEmployeeModelFactory
         {
             return employees.SelectAwait(async employee =>
             {
+                ////fill in model values from the entity
+                //var employeeModel = new EmployeeModel()
+                //{
+                //    Designation = employee.Designation,
+                //    EmployeeStatusId = employee.EmployeeStatusId,
+                //    Id = employee.Id,
+                //    Name = employee.Name,
+                //    IsCertified = employee.IsCertified,
+                //    IsMVP = employee.IsMVP,
+                //    EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus)
+                //};
+
+             
+                return await PrepareEmployeeModelAsync(null, employee,true);
+            });
+        });
+
+        return model;
+    }
+
+
+
+    public async Task<EmployeeModel> PrepareEmployeeModelAsync(EmployeeModel model, Employee employee, bool excludeProperties = false)
+    {
+        if (employee != null)
+        {
+            if(model==null)
+            {
                 //fill in model values from the entity
-                var employeeModel = new EmployeeModel()
+                model = new EmployeeModel()
                 {
                     Designation = employee.Designation,
                     EmployeeStatusId = employee.EmployeeStatusId,
@@ -43,13 +71,20 @@ public class EmployeeModelFactory : IEmployeeModelFactory
                     EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus)
                 };
 
-             
-                return employeeModel;
-            });
-        });
+            }
+
+            model.EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus);
+        }
+
+        if (!excludeProperties)
+        {
+            model.AvailableEmployeeStatusOptions = (await EmployeeStatus.Active.ToSelectListAsync()).ToList();
+        }
 
         return model;
     }
+
+
 
     public async Task<EmployeeSearchModel>PrepareEmployeeSearchModelAsync(EmployeeSearchModel searchModel)
     {
@@ -68,4 +103,5 @@ public class EmployeeModelFactory : IEmployeeModelFactory
 
         return searchModel;
     }
+
 }

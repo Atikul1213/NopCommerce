@@ -41,32 +41,80 @@ public class EmployeeController : BasePluginController
 
     public async Task<IActionResult> Create()
     {
+        var model = await _employeeModelFactory.PrepareEmployeeModelAsync(new EmployeeModel(), null);
 
-        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Create.cshtml");
+        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Create.cshtml",model);
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Create(EmployeeModel model)
     {
-        if (!ModelState.IsValid)
-            return BadRequest("~/Plugins/Misc.NopStationTeams/Views/Employee.Create.cshtml");
-
-        var employee = new Employee
+        if(ModelState.IsValid)
         {
-            Name = model.Name,
-            Designation = model.Designation,
-            IsMVP = model.IsMVP,
-            IsCertified = model.IsCertified
+            var employee = new Employee
+            {
+                Name = model.Name,
+                Designation = model.Designation,
+                IsMVP = model.IsMVP,
+                IsCertified = model.IsCertified,
+                EmployeeStatusId = model.EmployeeStatusId,
+            };
 
-        };
+            await _employeeService.InsertEmployeeAsync(employee);
+            return RedirectToAction("List");
+        }
 
-        await _employeeService.InsertEmployeeAsync(employee);
-        return RedirectToAction("Configure");
+        model = await _employeeModelFactory.PrepareEmployeeModelAsync(model, null);
+        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Create.cshtml", model);
     }
 
 
 
-    
+    public async Task<IActionResult> Edit(int id)
+    {
+        var employee = await _employeeService.GetEmployeeByIdAsync(id);
+
+        if (employee == null)
+            return RedirectToAction("List");
+
+
+        var model = await _employeeModelFactory.PrepareEmployeeModelAsync(null, employee);
+
+        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Edit.cshtml", model);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EmployeeModel model)
+    {
+        var employee = await _employeeService.GetEmployeeByIdAsync(model.Id);
+        if (employee==null)
+        {
+            return RedirectToAction("List"); 
+        }
+
+
+        if (ModelState.IsValid)
+        {
+
+            employee.Name = model.Name;
+            employee.Designation = model.Designation;
+            employee.IsMVP = model.IsMVP;
+            employee.IsCertified = model.IsCertified;
+            employee.EmployeeStatusId = model.EmployeeStatusId;
+             
+
+            await _employeeService.UpdateEmployeeAsync(employee);
+            return RedirectToAction("List");
+        }
+
+        model = await _employeeModelFactory.PrepareEmployeeModelAsync(model, employee);
+        return View("~/Plugins/Misc.NopStationTeams/Views/Employee/Edit.cshtml", model);
+    }
+
+
+
 
 
 

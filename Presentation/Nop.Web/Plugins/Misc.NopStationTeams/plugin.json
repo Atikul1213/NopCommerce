@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Misc",
+  "FriendlyName": "NopStationTeams",
+  "SystemName": "Misc.NopStationTeams",
+  "Version": "4.70.2",
+  "SupportedVersions": [ "4.70" ],
+  "Author": "NopStationTeams",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Misc.NopStationTeams.dll",
+  "Description": "This plugin use for adding new employee"
+}

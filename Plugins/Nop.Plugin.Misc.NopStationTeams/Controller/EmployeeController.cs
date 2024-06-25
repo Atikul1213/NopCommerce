@@ -43,6 +43,17 @@ public class EmployeeController : BasePluginController
         return Json(model);
     }
 
+    public async Task<IActionResult> HomePage()
+    {
+
+        var searchModel = await _employeeModelFactory.PrepareEmployeeSearchModelAsync(new EmployeeSearchModel());
+
+        return View("~/Plugins/Misc.NopStationTeams/Views/HomePage.cshtml", searchModel);
+    }
+
+
+
+
     public async Task<IActionResult> Create()
     {
         var model = await _employeeModelFactory.PrepareEmployeeModelAsync(new EmployeeModel(), null);

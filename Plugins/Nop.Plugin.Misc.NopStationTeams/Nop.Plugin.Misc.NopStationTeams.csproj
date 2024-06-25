@@ -26,6 +26,7 @@
     <None Remove="Views\Employee\Edit.cshtml" />
     <None Remove="Views\Employee\List.cshtml" />
     <None Remove="Views\Employee\_CreateOrUpdate.cshtml" />
+    <None Remove="Views\HomePage.cshtml" />
     <None Remove="Views\_ViewImports.cshtml" />
   </ItemGroup>
 
@@ -57,6 +58,9 @@
     <Content Include="Views\Employee\_CreateOrUpdate.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\HomePage.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\_ViewImports.cshtml">

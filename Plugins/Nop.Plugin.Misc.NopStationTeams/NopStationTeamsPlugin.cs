@@ -48,12 +48,14 @@ namespace Nop.Plugin.Misc.NopStationTeams
                 ["Admin.Misc.Employee.Fields.IsMVP"] = "IsMVP",
                 ["Admin.Misc.Employee.Fields.IsCertified"] = "IsCertified",
                 ["Admin.Misc.Employee.Fields.EmployeeStatus"] = "Status",  
+                [("Admin.Misc.Employee.Fields.Picture")] = "Picture",
                 
                 ["Admin.Misc.Employee.Fields.Name.Hint"] = "Enter Employee Name.",
                 ["Admin.Misc.Employee.Fields.Designation.Hint"] = "Enter Employee Designation.",
                 ["Admin.Misc.Employee.Fields.IsMVP.Hint"] = "Checked if Employee IsMVP.",
                 ["Admin.Misc.Employee.Fields.IsCertified.Hint"] = "Checked if Employee IsCertified.",
                 ["Admin.Misc.Employee.Fields.EmployeeStatus.Hint"] = "Select Employee Status.", 
+                [("Admin.Misc.Employee.Fields.Picture.Hint")] = "Profile Image",
 
 
                 ["Admin.Misc.Employee.List.Name"] = "Name", 

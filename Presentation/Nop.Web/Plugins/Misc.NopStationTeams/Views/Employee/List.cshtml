@@ -102,6 +102,13 @@
                             ClassName =  NopColumnClassDefaults.CenterAll,
                             Width = "50"
                         },
+
+                        new ColumnProperty(nameof(EmployeeModel.PictureThumbnailUrl))
+                        {
+                            Title = T("Admin.Misc.Employee.Fields.Picture").Text,
+                            Width = "100",
+                            Render = new RenderPicture(width: 100)
+                        },
                         new ColumnProperty(nameof(EmployeeModel.Name))
                         {
                             Title = T("Admin.Misc.Employee.Fields.Name").Text 

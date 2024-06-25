@@ -12,7 +12,7 @@ using Nop.Plugin.Misc.NopStationTeams.Mapping.Builders;
 using Nop.Plugin.Misc.NopStationTeams.Model;
 
 namespace Nop.Plugin.Misc.NopStationTeams.Migrations;
-[NopSchemaMigration("2020/05/27 08:40:55:1687541", "NopStationTeams base schema", MigrationProcessType.Installation)]
+[NopSchemaMigration("2024/06/25 08:40:55:1687541", "NopStationTeams base schema", MigrationProcessType.Installation)]
 public class SchemaMigration : ForwardOnlyMigration
 {
     public override void Up()

@@ -14,6 +14,8 @@ namespace Nop.Plugin.Misc.NopStationTeams.Domain
         public bool IsMVP { get; set; }
         public bool IsCertified { get; set; }
         public int EmployeeStatusId { get; set; }
+
+        public int PictureId { get; set; }
         public EmployeeStatus EmployeeStatus
         {
             get => (EmployeeStatus)EmployeeStatusId;

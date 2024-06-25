@@ -3,6 +3,7 @@ using Nop.Plugin.Misc.NopStationTeams.Model;
 using Nop.Plugin.Misc.NopStationTeams.Services;
 using Nop.Services;
 using Nop.Services.Localization;
+using Nop.Services.Media;
 using Nop.Web.Framework.Models.Extensions;
 
 namespace Nop.Plugin.Misc.NopStationTeams.Factories;
@@ -10,15 +11,51 @@ public class EmployeeModelFactory : IEmployeeModelFactory
 {
     private readonly IEmployeeService _employeeService;
     private readonly ILocalizationService _localizationService;
-    public EmployeeModelFactory(IEmployeeService employeeService, ILocalizationService localizationService)
+    private readonly IPictureService _pictureService;
+    public EmployeeModelFactory(IEmployeeService employeeService, ILocalizationService localizationService, IPictureService pictureService)
     {
         _employeeService = employeeService;
         _localizationService = localizationService;
+        _pictureService = pictureService;
     }
 
     public async Task<EmployeeListModel> PrepareEmployeeListModelAsync(EmployeeSearchModel searchModel)
     {
-         
+
+
+        //locales
+        await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
+        {
+
+            ["Admin.Misc.Employees"] = "Employees",
+            ["Admin.Misc.Employees.AddNew"] = "Add new Employee",
+            ["Admin.Misc.Employees.EditDetails"] = "Edit Employee Details",
+            ["Admin.Misc.Employees.BackToList"] = "Back to Employee List",
+
+
+
+
+            ["Admin.Misc.Employee.Fields.Name"] = "Name",
+            ["Admin.Misc.Employee.Fields.Designation"] = "Designation",
+            ["Admin.Misc.Employee.Fields.IsMVP"] = "IsMVP",
+            ["Admin.Misc.Employee.Fields.IsCertified"] = "IsCertified",
+            ["Admin.Misc.Employee.Fields.EmployeeStatus"] = "Status",
+            [("Admin.Misc.Employee.Fields.Picture")] = "Picture",
+
+            ["Admin.Misc.Employee.Fields.Name.Hint"] = "Enter Employee Name.",
+            ["Admin.Misc.Employee.Fields.Designation.Hint"] = "Enter Employee Designation.",
+            ["Admin.Misc.Employee.Fields.IsMVP.Hint"] = "Checked if Employee IsMVP.",
+            ["Admin.Misc.Employee.Fields.IsCertified.Hint"] = "Checked if Employee IsCertified.",
+            ["Admin.Misc.Employee.Fields.EmployeeStatus.Hint"] = "Select Employee Status.",
+            [("Admin.Misc.Employee.Fields.Picture.Hint")] = "Profile Image",
+
+
+            ["Admin.Misc.Employee.List.Name"] = "Name",
+            ["Admin.Misc.Employee.List.EmployeeStatus"] = "Status",
+            ["Admin.Misc.Employee.List.Name.Hint"] = "Search by Employee Name",
+            ["Admin.Misc.Employee.List.EmployeeStatus.Hint"] = "Search by Employee Status",
+        });
+
         ArgumentNullException.ThrowIfNull(nameof(searchModel));
         var employees = await _employeeService.SearchEmployeesAsync(searchModel.Name, searchModel.EmployeeStatusId,
 
@@ -68,10 +105,14 @@ public class EmployeeModelFactory : IEmployeeModelFactory
                     Name = employee.Name,
                     IsCertified = employee.IsCertified,
                     IsMVP = employee.IsMVP,
-                    EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus)
+                    EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus),
+                    PictureId = employee.PictureId
                 };
 
             }
+            var picture = await _pictureService.GetPictureByIdAsync(employee.PictureId);
+            (model.PictureThumbnailUrl, _) = await _pictureService.GetPictureUrlAsync(picture, 75);
+
 
             model.EmployeeStatusStr = await _localizationService.GetLocalizedEnumAsync(employee.EmployeeStatus);
         }

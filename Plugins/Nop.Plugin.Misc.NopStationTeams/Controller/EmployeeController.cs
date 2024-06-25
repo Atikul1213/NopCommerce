@@ -4,6 +4,7 @@ using Nop.Plugin.Misc.NopStationTeams.Domain;
 using Nop.Plugin.Misc.NopStationTeams.Factories;
 using Nop.Plugin.Misc.NopStationTeams.Model;
 using Nop.Plugin.Misc.NopStationTeams.Services;
+using Nop.Services.Media;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc.Filters;
@@ -15,15 +16,18 @@ public class EmployeeController : BasePluginController
 {
     private readonly IEmployeeService _employeeService;
     private readonly IEmployeeModelFactory _employeeModelFactory;
-    public EmployeeController(IEmployeeService employeeService, IEmployeeModelFactory employeeModelFactory)
+    private readonly IPictureService _pictureService;
+    public EmployeeController(IEmployeeService employeeService, IEmployeeModelFactory employeeModelFactory, IPictureService pictureService)
     {
         _employeeService = employeeService;
         _employeeModelFactory = employeeModelFactory;
+        _pictureService = pictureService;
     }
 
 
     public async Task<IActionResult> List()
     {
+
         var searchModel = await _employeeModelFactory.PrepareEmployeeSearchModelAsync(new EmployeeSearchModel());
 
         return View("~/Plugins/Misc.NopStationTeams/Views/Employee/List.cshtml",searchModel);
@@ -47,6 +51,14 @@ public class EmployeeController : BasePluginController
     }
 
 
+    protected virtual async Task UpdatePictureSeoNamesAsync(Employee employee)
+    {
+        var picture = await _pictureService.GetPictureByIdAsync(employee.PictureId);
+        if (picture != null)
+            await _pictureService.SetSeoFilenameAsync(picture.Id, await _pictureService.GetPictureSeNameAsync(employee.Name));
+    }
+
+
     [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
     public async Task<IActionResult> Create(EmployeeModel model, bool continueEditing)
     {
@@ -59,12 +71,17 @@ public class EmployeeController : BasePluginController
                 IsMVP = model.IsMVP,
                 IsCertified = model.IsCertified,
                 EmployeeStatusId = model.EmployeeStatusId,
+                PictureId = model.PictureId,
+
             };
 
             await _employeeService.InsertEmployeeAsync(employee);
+            //update picture seo file name
+            await UpdatePictureSeoNamesAsync(employee);
 
-           
-            return continueEditing? RedirectToAction("Edit", new {id= employee.Id} ):  RedirectToAction("List");
+
+
+            return continueEditing ? RedirectToAction("Edit", new {id= employee.Id} ):  RedirectToAction("List");
         }
 
         model = await _employeeModelFactory.PrepareEmployeeModelAsync(model, null);
@@ -105,6 +122,7 @@ public class EmployeeController : BasePluginController
             employee.IsMVP = model.IsMVP;
             employee.IsCertified = model.IsCertified;
             employee.EmployeeStatusId = model.EmployeeStatusId;
+            employee.PictureId = model.PictureId;
              
 
             await _employeeService.UpdateEmployeeAsync(employee);

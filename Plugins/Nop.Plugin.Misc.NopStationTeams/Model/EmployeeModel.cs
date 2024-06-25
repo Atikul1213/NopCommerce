@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,12 @@ public record EmployeeModel : BaseNopEntityModel
 
     [NopResourceDisplayName("Admin.Misc.Employee.Fields.IsCertified")]
     public bool IsCertified { get; set; }
+
+    public string PictureThumbnailUrl { get; set; }
+
+    [UIHint("Picture")]
+    [NopResourceDisplayName("Admin.Misc.Employee.Fields.Picture")]
+    public int PictureId { get; set; }
 
     [NopResourceDisplayName("Admin.Misc.Employee.Fields.EmployeeStatus")]
     public int EmployeeStatusId { get; set; }

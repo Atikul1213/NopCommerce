@@ -15,14 +15,23 @@ namespace Nop.Plugin.Misc.NopStationTeams
 {
     public class NopStationTeamsPlugin : BasePlugin , IWidgetPlugin
     {
+        #region Fields
 
         private readonly IWebHelper _webHelper;
         private readonly ILocalizationService _localizationService;
+
+        #endregion
+
+        #region Ctor
         public NopStationTeamsPlugin(IWebHelper webHelper,ILocalizationService localizationService)
         {
             _webHelper = webHelper;
             _localizationService = localizationService;
         }
+
+        #endregion
+
+        #region Method
 
         public bool HideInWidgetList => false;
 
@@ -31,6 +40,9 @@ namespace Nop.Plugin.Misc.NopStationTeams
             return _webHelper.GetStoreLocation() + "Admin/Employee/List";
         }
 
+        #endregion
+
+        #region WidgetZone
         public Type GetWidgetViewComponent(string widgetZone)
         {
           //  if (widgetZone == PublicWidgetZones.HomepageTop)
@@ -48,8 +60,10 @@ namespace Nop.Plugin.Misc.NopStationTeams
                 });
         }
 
+        #endregion
 
 
+        #region Install
         public override async Task InstallAsync()
         {
 
@@ -86,13 +100,17 @@ namespace Nop.Plugin.Misc.NopStationTeams
             await base.InstallAsync();
         }
 
+        #endregion
 
+
+        #region Uninstall
         public override async Task UninstallAsync()
         {
            
             await base.UninstallAsync();
         }
 
+        #endregion
 
     }
 }

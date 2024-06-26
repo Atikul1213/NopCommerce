@@ -9,9 +9,16 @@ using Nop.Web.Framework.Models.Extensions;
 namespace Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Factories;
 public class EmployeeModelFactory : IEmployeeModelFactory
 {
+    #region Fields
+
     private readonly IEmployeeService _employeeService;
     private readonly ILocalizationService _localizationService;
     private readonly IPictureService _pictureService;
+
+    #endregion
+
+
+    #region Ctor
     public EmployeeModelFactory(IEmployeeService employeeService, ILocalizationService localizationService, IPictureService pictureService)
     {
         _employeeService = employeeService;
@@ -19,6 +26,9 @@ public class EmployeeModelFactory : IEmployeeModelFactory
         _pictureService = pictureService;
     }
 
+    #endregion
+
+    #region Method
     public async Task<EmployeeListModel> PrepareEmployeeListModelAsync(EmployeeSearchModel searchModel)
     {
         ArgumentNullException.ThrowIfNull(nameof(searchModel));
@@ -107,4 +117,5 @@ public class EmployeeModelFactory : IEmployeeModelFactory
         return searchModel;
     }
 
+    #endregion
 }

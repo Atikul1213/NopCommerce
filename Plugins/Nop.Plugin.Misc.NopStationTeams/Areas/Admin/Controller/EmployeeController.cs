@@ -14,9 +14,15 @@ namespace Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Controller;
 [Area(AreaNames.ADMIN)]
 public class EmployeeController : BasePluginController
 {
+    #region Fields
+
     private readonly IEmployeeService _employeeService;
     private readonly IEmployeeModelFactory _employeeModelFactory;
     private readonly IPictureService _pictureService;
+
+    #endregion
+
+    #region Ctor
     public EmployeeController(IEmployeeService employeeService, IEmployeeModelFactory employeeModelFactory, IPictureService pictureService)
     {
         _employeeService = employeeService;
@@ -24,6 +30,10 @@ public class EmployeeController : BasePluginController
         _pictureService = pictureService;
     }
 
+    #endregion
+
+
+    #region Method List Create Edit Delete
 
     public async Task<IActionResult> List()
     {
@@ -151,6 +161,7 @@ public class EmployeeController : BasePluginController
         return RedirectToAction("List");
     }
 
+    #endregion
 
 
 }

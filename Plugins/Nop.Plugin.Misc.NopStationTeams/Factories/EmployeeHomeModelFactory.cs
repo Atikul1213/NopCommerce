@@ -10,14 +10,24 @@ using Nop.Web.Models.Media;
 namespace Nop.Plugin.Misc.NopStationTeams.Factories;
 public class EmployeeHomeModelFactory : IEmployeeHomeModelFactory
 {
+    #region Fields
+
     private readonly ILocalizationService _localizationService;
     private readonly IPictureService _pictureService;
+
+    #endregion
+
+    #region Ctor
     public EmployeeHomeModelFactory(ILocalizationService localizationService, IPictureService pictureService)
     {
         _localizationService = localizationService;
         _pictureService = pictureService;
     }
 
+    #endregion
+
+
+    #region Method
     public async Task<IList<EmployeeHomeModel>> PrepareEmployeeHomeListModelAsync(IList<Employee> employee)
     {
          var model = new List<EmployeeHomeModel>();
@@ -52,4 +62,6 @@ public class EmployeeHomeModelFactory : IEmployeeHomeModelFactory
             Picture = pictureModel
         };
     }
+
+    #endregion
 }

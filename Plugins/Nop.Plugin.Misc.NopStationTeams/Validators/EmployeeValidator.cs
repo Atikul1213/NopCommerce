@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
+using Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Model;
 using Nop.Plugin.Misc.NopStationTeams.Domain;
-using Nop.Plugin.Misc.NopStationTeams.Model;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Validators;
 

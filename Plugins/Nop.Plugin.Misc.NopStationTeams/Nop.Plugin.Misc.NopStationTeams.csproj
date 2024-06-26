@@ -21,13 +21,14 @@
   <ItemGroup>
     <None Remove="logo.jpg" />
     <None Remove="plugin.json" />
-    <None Remove="Views\Configure.cshtml" />
-    <None Remove="Views\Employee\Create.cshtml" />
-    <None Remove="Views\Employee\Edit.cshtml" />
-    <None Remove="Views\Employee\List.cshtml" />
-    <None Remove="Views\Employee\_CreateOrUpdate.cshtml" />
-    <None Remove="Views\HomePage.cshtml" />
-    <None Remove="Views\_ViewImports.cshtml" />
+    <None Remove="Areas\Admin\Views\Configure.cshtml" />
+    <None Remove="Areas\Admin\Views\Employee\Create.cshtml" />
+    <None Remove="Areas\Admin\Views\Employee\Edit.cshtml" />
+    <None Remove="Areas\Admin\Views\Employee\List.cshtml" />
+    <None Remove="Areas\Admin\Views\Employee\_CreateOrUpdate.cshtml" />
+    <None Remove="Areas\Admin\Views\HomePage.cshtml" />
+    <None Remove="Areas\Admin\Views\_ViewImports.cshtml" />
+    <None Remove="Views\EmployeeList.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,33 +38,36 @@
     <Content Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Configure.cshtml">
+    <Content Include="Areas\Admin\Views\Configure.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Employee\Create.cshtml">
+    <Content Include="Areas\Admin\Views\Employee\Create.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Employee\Edit.cshtml">
+    <Content Include="Areas\Admin\Views\Employee\Edit.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Employee\List.cshtml">
+    <Content Include="Areas\Admin\Views\Employee\List.cshtml">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>List.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Employee\_CreateOrUpdate.cshtml">
+    <Content Include="Areas\Admin\Views\Employee\_CreateOrUpdate.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\EmployeeList.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\HomePage.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\_ViewImports.cshtml">
+    <Content Include="Areas\Admin\Views\_ViewImports.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

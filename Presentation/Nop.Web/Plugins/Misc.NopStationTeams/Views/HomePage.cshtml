@@ -1,62 +1,58 @@
-@model EmployeeSearchModel
-
+@using Nop.Web.Framework.Models.DataTables
+@model IList<Nop.Plugin.Misc.NopStationTeams.Model.EmployeeHomeModel>
 
 @{
     var cnt = 0;
 }
-
-@* <link href="~/Plugins/Misc.NopStation/content/style.css" rel="stylesheet" />  *@
-
-
 <div class="developer-container">
-
-    @foreach (var developer in Model)
+    @foreach(var employee in Model)
     {
         <div class="developer-item card">
             <div class="card-body">
-                <div>
+                    
                     <div>
+                    
                         @{
                             var data = new ViewDataDictionary(ViewData)
-                    {
-                    {"pictureUrl", developer.Picture.ThumbImageUrl},
-                    };
-                            @await Html.PartialAsync("~/Plugins/Misc.NopStationTeams/Views/HomePage.cshtml", data)
+                            {
+                                {"pictureUrl", employee.Picture.ThumbImageUrl},
+                            };
+                            @await Html.PartialAsync("~/Plugins/Misc.NopStationTeams/Views/EmployeeList.cshtml",data);
                         }
                     </div>
-                </div>
-                <div class="card-text">
-                    <h5 class="name">@developer.Name</h5>
-                    <p class="designation">@developer.DeveloperDesignationStr</p>
 
-                    @if (developer.IsMVP || developer.IsCertified)
+             
+
+                <div class="card-text">
+                    <h5 class="name">@employee.Name</h5>
+                    <p class="designation">@employee.Designation</p>
+                    
+                    @if(employee.IsMVP || employee.IsCertified)
                     {
-                        <hr />
+                        <hr/>
                     }
 
                     <div class="badge-container">
-                        @if (developer.IsMVP)
-                        {
-                            <div class="badge badge-1" title="nopCommerce MVP">
-                                <img src="https://www.nop-station.com/images/thumbs/0002602_bigbadge_mvp.png" alt="MVP" class="badge-image">
-                                <span>nop MVP</span>
-                            </div>
-                        }
-
-                        @if (developer.IsCertified)
+                        @if(employee.IsMVP)
                         {
                             <div class="badge badge-2" title="nopCommerce Certified">
-                                <img src="https://www.nop-station.com/images/thumbs/0002603_bigbadge_certifieddev.png" alt="Certified" class="badge-image">
+                                <img src="https://www.nop-station.com/images/thumbs/0002602_bigbadge_mvp.png" alt="MVP" class="badge-image"/>
                                 <span>Certified</span>
                             </div>
                         }
                     </div>
-
                 </div>
+
+
             </div>
         </div>
+
+
     }
 </div>
+
+
+
 
 <style>
 

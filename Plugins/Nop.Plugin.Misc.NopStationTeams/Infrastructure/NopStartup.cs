@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core.Infrastructure;
+using Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Factories;
 using Nop.Plugin.Misc.NopStationTeams.Factories;
 using Nop.Plugin.Misc.NopStationTeams.Services;
 
@@ -19,5 +21,7 @@ public class NopStartup : INopStartup
     {
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IEmployeeModelFactory, EmployeeModelFactory>();
+        services.AddScoped<IEmployeeHomeModelFactory, EmployeeHomeModelFactory>();
+        
     }
 }

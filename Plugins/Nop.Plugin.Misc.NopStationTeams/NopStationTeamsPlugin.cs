@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nop.Core;
+using Nop.Plugin.Misc.NopStationTeams.Components;
 using Nop.Services.Cms;
 using Nop.Services.Common;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
+using Nop.Web.Framework.Infrastructure;
 
 namespace Nop.Plugin.Misc.NopStationTeams
 {
-    public class NopStationTeamsPlugin : BasePlugin , IMiscPlugin
+    public class NopStationTeamsPlugin : BasePlugin , IWidgetPlugin
     {
 
         private readonly IWebHelper _webHelper;
@@ -22,12 +24,32 @@ namespace Nop.Plugin.Misc.NopStationTeams
             _localizationService = localizationService;
         }
 
-
+        public bool HideInWidgetList => false;
 
         public override string GetConfigurationPageUrl()
         {
             return _webHelper.GetStoreLocation() + "Admin/Employee/List";
         }
+
+        public Type GetWidgetViewComponent(string widgetZone)
+        {
+          //  if (widgetZone == PublicWidgetZones.HomepageTop)
+          //  {
+                return typeof(EmployeeComponent);
+            //}
+        }
+
+        public Task<IList<string>> GetWidgetZonesAsync()
+        {
+            return Task.FromResult<IList<string>>(
+                new List<string>
+                {
+                PublicWidgetZones.HomepageTop,
+                });
+        }
+
+
+
         public override async Task InstallAsync()
         {
 
@@ -39,8 +61,6 @@ namespace Nop.Plugin.Misc.NopStationTeams
                 ["Admin.Misc.Employees.AddNew"] = "Add new Employee",
                 ["Admin.Misc.Employees.EditDetails"] = "Edit Employee Details",
                 ["Admin.Misc.Employees.BackToList"] = "Back to Employee List",
-
-
 
 
                 ["Admin.Misc.Employee.Fields.Name"] = "Name",

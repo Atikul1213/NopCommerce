@@ -31,15 +31,27 @@
                     {
                         <hr/>
                     }
+                    <div class="row">
 
-                    <div class="badge-container">
-                        @if(employee.IsMVP)
+                    <div class="badge-container col-6">
+                        @if (employee.IsMVP)
                         {
                             <div class="badge badge-2" title="nopCommerce Certified">
-                                <img src="https://www.nop-station.com/images/thumbs/0002602_bigbadge_mvp.png" alt="MVP" class="badge-image"/>
-                                <span>Certified</span>
+                                <img src="https://www.nop-station.com/images/thumbs/0002602_bigbadge_mvp.png" alt="MVP" class="badge-image" />
+                                <span>MVP</span>
                             </div>
                         }
+                            @if (employee.IsCertified)
+                            {
+                                <div class="badge badge-2" title="nopCommerce Certified">
+                                    <img src="https://www.nop-station.com/images/thumbs/0002603_bigbadge_certifieddev.png" alt="IsCertified" class="badge-image" />
+                                    <span>Certified</span>
+                                </div>
+                            }
+                    </div>
+
+                     
+                    
                     </div>
                 </div>
 

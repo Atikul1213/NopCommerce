@@ -1,10 +1,12 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
+using Nop.Core;
 using Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Factories;
 using Nop.Plugin.Misc.NopStationTeams.Areas.Admin.Model;
 using Nop.Plugin.Misc.NopStationTeams.Domain;
 using Nop.Plugin.Misc.NopStationTeams.Services;
 using Nop.Services.Media;
+using Nop.Services.Security;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc.Filters;
@@ -19,15 +21,17 @@ public class EmployeeController : BasePluginController
     private readonly IEmployeeService _employeeService;
     private readonly IEmployeeModelFactory _employeeModelFactory;
     private readonly IPictureService _pictureService;
+    private readonly IWorkContext _workContext;
 
     #endregion
 
     #region Ctor
-    public EmployeeController(IEmployeeService employeeService, IEmployeeModelFactory employeeModelFactory, IPictureService pictureService)
+    public EmployeeController(IEmployeeService employeeService, IEmployeeModelFactory employeeModelFactory, IPictureService pictureService, IWorkContext workContext)
     {
         _employeeService = employeeService;
         _employeeModelFactory = employeeModelFactory;
         _pictureService = pictureService;
+        _workContext = workContext;
     }
 
     #endregion
@@ -161,6 +165,36 @@ public class EmployeeController : BasePluginController
         return RedirectToAction("List");
     }
 
+
+    [HttpPost]
+
+    public  async Task<IActionResult> DeleteSelected(ICollection<int> selectedId)
+    {
+         
+
+        if (selectedId == null || !selectedId.Any())
+            return NoContent();
+
+        //var currentVendor = await _workContext.GetCurrentVendorAsync();
+        //await _employeeService.DeleteEmployeeAsync((await _employeeService.GetEmployeeByIdAsync(selectedId.ToArray<>))
+        //    .Where(p => currentVendor == null || p.VendorId == currentVendor.Id).ToList());
+        try
+        {
+
+            foreach (var id in selectedId)
+            {
+                var employee = await _employeeService.GetEmployeeByIdAsync(id);
+                if (employee != null)
+                      await _employeeService.DeleteEmployeeAsync(employee);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+        return Json(new { Result = true });
+    }
     #endregion
 
 
